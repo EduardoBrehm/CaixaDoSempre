@@ -45,7 +45,7 @@
             </div>
         </div>
 
-        <a href="{{ url('/dashboard') }}" 
+        <a href="{{ url('/home') }}" 
            class="inline-flex items-center px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition transform hover:scale-105">
             Comece a Impressionar
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">

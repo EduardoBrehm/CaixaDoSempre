@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
         }
     </style>
 </head>
+
 <body class="bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900 min-h-screen">
     <nav class="bg-white shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -22,7 +24,8 @@
                     </a>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="{{ url('/dashboard') }}" class="text-gray-600 hover:text-gray-900 transition">Dashboard</a>
+                    <a href="{{ route('login') }}" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition">Login</a>
+                    <a href="{{ route('register') }}" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition">Criar Conta</a>
                 </div>
             </div>
         </div>
@@ -35,9 +38,10 @@
     <footer class="bg-white border-t mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <p class="text-center text-gray-500 text-sm">
-                © {{ date('Y') }} Enrol.ai - Transformando palavras em arte corporativa
+                {{ date('Y') }} Enrol.ai - Transformando palavras em arte corporativa
             </p>
         </div>
     </footer>
 </body>
+
 </html>
