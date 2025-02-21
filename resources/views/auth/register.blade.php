@@ -1,82 +1,125 @@
 @extends('layouts.app')
 
-@section('title', 'Criar Conta')
+@section('title', 'Criar Conta - CaixaDoSempre')
 
 @section('content')
-<div class="min-h-[calc(100vh-16rem)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8 bg-white rounded-xl shadow-lg p-8">
-        <div>
-            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+<div class="min-h-screen bg-pink-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="text-center">
+            <h2 class="text-3xl font-extrabold text-gray-900">
                 Crie sua conta
             </h2>
-            <p class="mt-2 text-center text-sm text-gray-600">
-                Junte-se a nós e comece a transformar suas ideias em textos profissionais
+            <p class="mt-2 text-sm text-gray-600">
+                Comece a guardar memórias especiais com seu amor
             </p>
         </div>
+    </div>
 
-        <form method="POST" action="{{ route('register.post') }}" class="mt-8 space-y-6">
-            @csrf
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="bg-white py-8 px-4 shadow-lg sm:rounded-lg sm:px-10 border-2 border-rose-100">
+            <form class="space-y-6" action="{{ route('register.post') }}" method="POST">
+                @csrf
 
-            <div class="rounded-md shadow-sm space-y-4">
                 <div>
-                    <label for="name" class="sr-only">Nome</label>
-                    <input type="text" name="name" id="name" required 
-                        class="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                        placeholder="Seu nome completo">
+                    <label for="name" class="block text-sm font-medium text-gray-700">
+                        Nome completo
+                    </label>
+                    <div class="mt-1">
+                        <input id="name" name="name" type="text" required 
+                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 
+                            focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm">
+                    </div>
                     @error('name')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div>
-                    <label for="email" class="sr-only">E-mail</label>
-                    <input type="email" name="email" id="email" required 
-                        class="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                        placeholder="Seu melhor e-mail">
+                    <label for="email" class="block text-sm font-medium text-gray-700">
+                        E-mail
+                    </label>
+                    <div class="mt-1">
+                        <input id="email" name="email" type="email" autocomplete="email" required 
+                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 
+                            focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm">
+                    </div>
                     @error('email')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div>
-                    <label for="password" class="sr-only">Senha</label>
-                    <input type="password" name="password" id="password" required 
-                        class="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                        placeholder="Crie uma senha forte">
+                    <label for="password" class="block text-sm font-medium text-gray-700">
+                        Senha
+                    </label>
+                    <div class="mt-1">
+                        <input id="password" name="password" type="password" required 
+                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 
+                            focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm">
+                    </div>
                     @error('password')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div>
-                    <label for="password_confirmation" class="sr-only">Confirmar Senha</label>
-                    <input type="password" name="password_confirmation" id="password_confirmation" required 
-                        class="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                        placeholder="Confirme sua senha">
+                    <label for="password_confirmation" class="block text-sm font-medium text-gray-700">
+                        Confirme a senha
+                    </label>
+                    <div class="mt-1">
+                        <input id="password_confirmation" name="password_confirmation" type="password" required 
+                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 
+                            focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm">
+                    </div>
                 </div>
-            </div>
 
-            <div>
-                <button type="submit" 
-                    class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">
-                    <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-                        <svg class="h-5 w-5 text-blue-500 group-hover:text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd" />
-                        </svg>
-                    </span>
-                    Criar minha conta
-                </button>
-            </div>
-        </form>
+                <div class="flex items-center">
+                    <input id="terms" name="terms" type="checkbox" required
+                        class="h-4 w-4 text-rose-600 focus:ring-rose-500 border-gray-300 rounded">
+                    <label for="terms" class="ml-2 block text-sm text-gray-900">
+                        Li e aceito os <a href="#" class="text-rose-600 hover:text-rose-500">termos de uso</a> e a 
+                        <a href="#" class="text-rose-600 hover:text-rose-500">política de privacidade</a>
+                    </label>
+                </div>
 
-        <div class="flex items-center justify-center">
-            <div class="text-sm">
-                Já tem uma conta?
-                <a href="{{ route('login') }}" class="font-medium text-blue-600 hover:text-blue-500 transition duration-150 ease-in-out">
-                    Fazer login
-                </a>
+                <div>
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-rose-600 hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500">
+                        Criar conta
+                    </button>
+                </div>
+            </form>
+
+            <div class="mt-6">
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-white text-gray-500">
+                            Já tem uma conta?
+                        </span>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <a href="{{ route('login') }}" class="w-full flex justify-center py-2 px-4 border border-rose-300 rounded-md shadow-sm text-sm font-medium text-rose-600 bg-white hover:bg-rose-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500">
+                        Fazer login
+                    </a>
+                </div>
             </div>
         </div>
+    </div>
+
+    <!-- Decoração -->
+    <div class="absolute top-0 right-0 -mt-12 -mr-12 pointer-events-none opacity-10">
+        <svg class="w-96 h-96 text-rose-500" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+    </div>
+    <div class="absolute bottom-0 left-0 -mb-12 -ml-12 pointer-events-none opacity-10">
+        <svg class="w-96 h-96 text-rose-500" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
     </div>
 </div>
 @endsection
