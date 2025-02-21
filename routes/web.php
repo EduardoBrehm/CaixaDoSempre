@@ -3,14 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TextGeneratorController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CapsuleController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function () {
-    return view('home');
-});
 
 Route::post('/generate-text', [TextGeneratorController::class, 'generate']);
 
@@ -24,7 +22,7 @@ Route::middleware('guest')->group(function () {
     // Rotas de Recuperação de Senha
     Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
     Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
-    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])->name('password.reset');
+    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('password.reset');
     Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 });
 
@@ -33,4 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    // Rotas das Cápsulas
+    Route::get('/capsules/create', [CapsuleController::class, 'create'])->name('capsules.create');
+    Route::post('/capsules', [CapsuleController::class, 'store'])->name('capsules.store');
 });
