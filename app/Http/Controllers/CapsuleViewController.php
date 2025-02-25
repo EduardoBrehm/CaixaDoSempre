@@ -12,9 +12,15 @@ class CapsuleViewController extends Controller
         $now = Carbon::now();
         $openingDate = Carbon::parse($capsule->opening_date);
         
-        $canOpen = $now->greaterThanOrEqualTo($openingDate);
-        $daysRemaining = $now->diffInDays($openingDate, false);
+        // Garante que a data está no timezone correto
+        $openingDate->setTimezone('America/Sao_Paulo');
         
-        return view('capsules.view', compact('capsule', 'canOpen', 'daysRemaining'));
+        $canOpen = $now->greaterThanOrEqualTo($openingDate);
+        
+        return view('capsules.view', [
+            'capsule' => $capsule,
+            'canOpen' => $canOpen,
+            'opening_date' => $openingDate->format('Y-m-d H:i:s')
+        ]);
     }
 }
