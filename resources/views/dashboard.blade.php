@@ -21,75 +21,55 @@
     </div>
 
     <div class="mt-8 bg-white shadow overflow-hidden sm:rounded-md">
-        <ul role="list" class="divide-y divide-gray-200">
-            <li>
-                <div class="px-4 py-4 sm:px-6">
-                    <div class="flex items-center justify-between">
-                        <p class="text-sm font-medium text-rose-600 truncate">
-                            Nosso Primeiro Ano Juntos
-                        </p>
-                        <div class="ml-2 flex-shrink-0 flex">
-                            <p class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-rose-100 text-rose-800">
-                                Disponível em 21/06/2025
-                            </p>
-                        </div>
-                    </div>
-                    <div class="mt-2 sm:flex sm:justify-between">
-                        <div class="sm:flex">
-                            <p class="flex items-center text-sm text-gray-500">
-                                <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-rose-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                </svg>
-                                3 mensagens
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </li>
-
-            <li>
-                <div class="px-4 py-4 sm:px-6">
-                    <div class="flex items-center justify-between">
-                        <p class="text-sm font-medium text-rose-600 truncate">
-                            Promessas para Nosso Casamento
-                        </p>
-                        <div class="ml-2 flex-shrink-0 flex">
-                            <p class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-rose-100 text-rose-800">
-                                Disponível em 15/12/2025
-                            </p>
-                        </div>
-                    </div>
-                    <div class="mt-2 sm:flex sm:justify-between">
-                        <div class="sm:flex">
-                            <p class="flex items-center text-sm text-gray-500">
-                                <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-rose-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                </svg>
-                                5 mensagens
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-
-    <div class="mt-8 bg-white shadow sm:rounded-lg">
-        <div class="px-4 py-5 sm:p-6">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">
-                Crie sua primeira cápsula do tempo
-            </h3>
-            <div class="mt-2 max-w-xl text-sm text-gray-500">
-                <p>
-                    Guarde mensagens especiais, fotos e promessas para serem abertas em momentos importantes do seu relacionamento.
-                </p>
+        @if($capsules->isEmpty())
+            <div class="px-4 py-8 text-center">
+                <p class="text-gray-500">Você ainda não criou nenhuma cápsula do tempo.</p>
+                <p class="mt-2 text-sm text-gray-400">Clique em "Nova Cápsula" para começar!</p>
             </div>
-            <div class="mt-5">
-                <a href="{{ route('capsules.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-rose-600 hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500">
-                    Criar Primeira Cápsula
-                </a>
-            </div>
-        </div>
+        @else
+            <ul role="list" class="divide-y divide-gray-200">
+                @foreach($capsules as $capsule)
+                <li>
+                    <div class="px-4 py-4 sm:px-6">
+                        <div class="flex items-center justify-between">
+                            <p class="text-sm font-medium text-rose-600 truncate">
+                                {{ $capsule->title }}
+                            </p>
+                            <div class="ml-2 flex-shrink-0 flex">
+                                <p class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ \Carbon\Carbon::parse($capsule->opening_date)->isPast() ? 'bg-green-100 text-green-800' : 'bg-rose-100 text-rose-800' }}">
+                                    {{ \Carbon\Carbon::parse($capsule->opening_date)->isPast() ? 'Disponível' : 'Disponível em ' . \Carbon\Carbon::parse($capsule->opening_date)->format('d/m/Y') }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mt-2 sm:flex sm:justify-between">
+                            <div class="sm:flex">
+                                <p class="flex items-center text-sm text-gray-500">
+                                    <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-rose-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                    </svg>
+                                    {{ $capsule->photos->count() }} {{ $capsule->photos->count() == 1 ? 'foto' : 'fotos' }}
+                                </p>
+                                <p class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0 sm:ml-6">
+                                    <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-rose-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                    </svg>
+                                    {{ ucfirst($capsule->plan) }}
+                                </p>
+                            </div>
+                            <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                                <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-rose-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <p>
+                                    Criada em {{ \Carbon\Carbon::parse($capsule->created_at)->format('d/m/Y') }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                @endforeach
+            </ul>
+        @endif
     </div>
 </div>
 @endsection

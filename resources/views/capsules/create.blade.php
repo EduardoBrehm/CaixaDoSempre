@@ -80,7 +80,7 @@
         <div class="bg-white rounded-lg shadow-lg p-8">
             <h2 class="text-2xl font-bold text-gray-900 mb-6">Criar Nova Cápsula</h2>
             
-            <form action="{{ route('capsules.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+            <form action="{{ route('capsules.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="plan" id="selected-plan" value="basic">
 
@@ -100,7 +100,7 @@
                     <div class="space-y-6">
                         <div>
                             <label for="photo" class="block text-sm font-medium text-gray-700">Foto do Casal</label>
-                            <input type="file" name="photo" id="photo" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-rose-50 file:text-rose-700 hover:file:bg-rose-100">
+                            <input type="file" name="photos[]" id="photo" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-rose-50 file:text-rose-700 hover:file:bg-rose-100">
                         </div>
 
                         <div>
