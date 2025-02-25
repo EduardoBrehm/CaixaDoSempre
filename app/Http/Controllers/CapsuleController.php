@@ -18,33 +18,37 @@ class CapsuleController extends Controller
     public function store(Request $request)
     {
         try {   
-        // $request->validate([
-        //     'title' => 'required|string|max:255',
-        //     'opening_date' => 'required|date|after:today',
-        //     'plan' => 'required|in:basic,intermediate',
-        // ]);
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'nullable|string|max:1000',
+                'opening_date' => 'required|date|after:today',
+                'plan' => 'required|in:basic,intermediate',
+                'photos' => 'required|array',
+                'photos.*' => 'required|image|max:5120',
+                'counter_style' => 'required_if:plan,intermediate|in:classic,modern,romantic',
+                'music' => 'nullable|file|mimes:mp3,wav|max:10240',
+            ]);
 
-        // if ($request->plan === 'basic') {
-        //     $request->validate([
-        //         'photos' => 'required|array|max:1',
-        //         'photos.*' => 'required|image|max:5120',
-        //     ]);
-        // } else {
-        //     $request->validate([
-        //         'photos' => 'required|array',
-        //         'photos.*' => 'required|image|max:5120',
-        //         'music' => 'required|file|mimes:mp3,wav|max:10240',
-        //         'counter_style' => 'required|in:classic,modern,romantic',
-        //     ]);
-        // }
+            if ($request->plan === 'basic' && count($request->file('photos')) > 1) {
+                return redirect()->back()
+                    ->withErrors(['photos' => 'O plano básico permite apenas 1 foto'])
+                    ->withInput();
+            }
+
+            if ($request->plan === 'intermediate' && count($request->file('photos')) > 5) {
+                return redirect()->back()
+                    ->withErrors(['photos' => 'O plano intermediário permite no máximo 5 fotos'])
+                    ->withInput();
+            }
 
             $capsule = Capsule::create([
                 'user_id' => Auth::id(),
                 'title' => $request->title,
+                'description' => $request->description,
                 'opening_date' => $request->opening_date,
                 'plan' => $request->plan,
-                'music' => $request->music,
-                'counter_style' => $request->counter_style,
+                'music' => $request->hasFile('music') ? $request->file('music')->store('capsule_musics', 'public') : null,
+                'counter_style' => $request->counter_style ?? 'classic',
             ]);
 
             if ($request->hasFile('photos')) {
@@ -69,7 +73,8 @@ class CapsuleController extends Controller
 
         } catch (\Exception $e) {
             return redirect()->back()
-                ->with('error', 'Erro ao criar cápsula: ' . $e->getMessage());
+                ->with('error', 'Erro ao criar cápsula: ' . $e->getMessage())
+                ->withInput();
         }
     }
 }

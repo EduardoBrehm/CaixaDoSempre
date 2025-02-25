@@ -63,6 +63,9 @@
                                 <p>
                                     Criada em {{ \Carbon\Carbon::parse($capsule->created_at)->format('d/m/Y') }}
                                 </p>
+                                <a href="{{ route('capsules.view', $capsule) }}" class="inline-flex items-center px-4 py-2 bg-rose-100 border border-transparent rounded-md font-semibold text-xs text-rose-700 uppercase tracking-widest hover:bg-rose-200 ml-4">
+                                    Ver Cápsula
+                                </a>
                             </div>
                         </div>
                     </div>

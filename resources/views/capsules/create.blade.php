@@ -90,7 +90,12 @@
                     <input type="text" name="title" id="title" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-rose-500 focus:ring-rose-500">
                 </div>
 
-                <div>
+                <div class="mt-4">
+                    <label for="description" class="block text-sm font-medium text-gray-700">Descrição</label>
+                    <textarea name="description" id="description" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-rose-500 focus:ring-rose-500"></textarea>
+                </div>
+
+                <div class="mt-4">
                     <label for="opening_date" class="block text-sm font-medium text-gray-700">Data de Abertura</label>
                     <input type="date" name="opening_date" id="opening_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-rose-500 focus:ring-rose-500">
                 </div>
@@ -169,20 +174,13 @@ function selectPlan(plan) {
     // Adiciona a seleção ao plano escolhido
     document.getElementById(plan + '-plan').classList.add('border-rose-500');
     
-    // Mostra/esconde os campos apropriados
-    if (plan === 'basic') {
-        document.getElementById('basic-fields').classList.remove('hidden');
-        document.getElementById('intermediate-fields').classList.add('hidden');
-    } else {
-        document.getElementById('basic-fields').classList.add('hidden');
-        document.getElementById('intermediate-fields').classList.remove('hidden');
-    }
+    // Esconde todos os campos específicos
+    document.getElementById('basic-fields').classList.add('hidden');
+    document.getElementById('intermediate-fields').classList.add('hidden');
+    
+    // Mostra os campos do plano selecionado
+    document.getElementById(plan + '-fields').classList.remove('hidden');
 }
-
-// Seleciona o plano básico por padrão
-document.addEventListener('DOMContentLoaded', function() {
-    selectPlan('basic');
-});
 </script>
 @endpush
 @endsection

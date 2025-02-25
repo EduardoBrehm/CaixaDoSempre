@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TextGeneratorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CapsuleController;
+use App\Http\Controllers\CapsuleViewController;
 use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
@@ -32,3 +33,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/capsules/create', [CapsuleController::class, 'create'])->name('capsules.create');
     Route::post('/capsules', [CapsuleController::class, 'store'])->name('capsules.store');
 });
+
+// Rota pública para visualizar cápsula
+Route::get('/{capsule}', [CapsuleViewController::class, 'show'])->name('capsules.view');
