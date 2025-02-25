@@ -4,13 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TextGeneratorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CapsuleController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
 });
-
-
-Route::post('/generate-text', [TextGeneratorController::class, 'generate']);
 
 // Rotas de Autenticação
 Route::middleware('guest')->group(function () {
@@ -28,9 +26,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Rotas das Cápsulas
     Route::get('/capsules/create', [CapsuleController::class, 'create'])->name('capsules.create');
