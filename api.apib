@@ -1,0 +1,141 @@
+FORMAT: 1A
+HOST: http://localhost:8000
+
+# Caixa do Sempre API
+
+API para gerenciamento de cápsulas do tempo digitais.
+
+# Group Autenticação
+
+## Login [/api/login]
+
+### Fazer login [POST]
+
++ Request (application/json)
+    + Attributes
+        + email: user@example.com (string, required) - Email do usuário
+        + password: secret123 (string, required) - Senha do usuário
+
++ Response 200 (application/json)
+    + Attributes
+        + token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9... (string) - Token JWT para autenticação
+        + user (object)
+            + id: 1 (number)
+            + name: John Doe (string)
+            + email: user@example.com (string)
+
+# Group Cápsulas
+
+## Coleção de Cápsulas [/api/capsules]
+
+### Listar Cápsulas [GET]
+
+Retorna todas as cápsulas do usuário autenticado.
+
++ Request
+    + Headers
+            Authorization: Bearer {token}
+
++ Response 200 (application/json)
+    + Attributes (array)
+        + (Capsule)
+
+### Criar Nova Cápsula [POST]
+
++ Request (application/json)
+    + Headers
+            Authorization: Bearer {token}
+    
+    + Attributes
+        + title: Minha Cápsula (string, required) - Título da cápsula
+        + opening_date: `2025-12-31 23:59:59` (string, required) - Data de abertura da cápsula
+        + description: Uma descrição da cápsula (string, optional)
+
++ Response 201 (application/json)
+    + Attributes (Capsule)
+
+## Cápsula Individual [/api/capsules/{id}]
+
++ Parameters
+    + id: 1 (number, required) - ID da cápsula
+
+### Visualizar Cápsula [GET]
+
++ Request
+    + Headers
+            Authorization: Bearer {token}
+
++ Response 200 (application/json)
+    + Attributes
+        + capsule (Capsule)
+        + canOpen: false (boolean) - Indica se a cápsula pode ser aberta
+        + opening_date: `2025-12-31 23:59:59` (string) - Data formatada de abertura
+
+### Atualizar Cápsula [PUT]
+
++ Request (application/json)
+    + Headers
+            Authorization: Bearer {token}
+    
+    + Attributes
+        + title: Novo Título (string, optional) - Novo título da cápsula
+        + opening_date: `2026-01-01 00:00:00` (string, optional) - Nova data de abertura
+        + description: Nova descrição (string, optional)
+
++ Response 200 (application/json)
+    + Attributes (Capsule)
+
+### Excluir Cápsula [DELETE]
+
++ Request
+    + Headers
+            Authorization: Bearer {token}
+
++ Response 204
+
+# Group Fotos
+
+## Fotos da Cápsula [/api/capsules/{capsule_id}/photos]
+
++ Parameters
+    + capsule_id: 1 (number, required) - ID da cápsula
+
+### Upload de Foto [POST]
+
++ Request (multipart/form-data)
+    + Headers
+            Authorization: Bearer {token}
+    
+    + Body
+            photo: [Arquivo binário]
+            description: Descrição da foto (opcional)
+
++ Response 201 (application/json)
+    + Attributes (Photo)
+
+### Listar Fotos [GET]
+
++ Request
+    + Headers
+            Authorization: Bearer {token}
+
++ Response 200 (application/json)
+    + Attributes (array)
+        + (Photo)
+
+# Data Structures
+
+## Capsule
++ id: 1 (number)
++ title: Minha Cápsula (string)
++ description: Uma descrição da cápsula (string)
++ opening_date: `2025-12-31 23:59:59` (string)
++ created_at: `2025-02-26 09:54:12` (string)
++ photos (array[Photo])
+
+## Photo
++ id: 1 (number)
++ capsule_id: 1 (number)
++ path: /storage/photos/abc123.jpg (string)
++ description: Descrição da foto (string, nullable)
++ created_at: `2025-02-26 09:54:12` (string)
